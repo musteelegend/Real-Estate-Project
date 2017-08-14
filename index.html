@@ -69,6 +69,7 @@
         #zoom-to-area {
             width: 24%;
         }
+        #places-search,
         #search-within-time-text {
             width: 84%;
         }
@@ -108,6 +109,12 @@
                 <span class="text">of</span>
                 <input id="search-within-time-text" type="text" placeholder="Ex: Google Office NYC or 75 9th Ave, New York, NY">
                 <input id="search-within-time" type="button" value="Go">
+            </div>
+            <hr>
+            <div>
+                <span class="text">Search for nearby places</span>
+                <input id="places-search" type="text" placeholder="Ex: Pizza delivery in NYC">
+                <input id="go-places" type="button" value="Go">
             </div>
         </div>
         <div id="map"></div>
@@ -196,6 +203,15 @@
                 styles: styles,
                 mapTypeControl: false
             });
+            // This autocomplete is for use in the search within time entry box.
+            var timeAutocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('search-within-time-text'));
+            // This autocomplete is for use in the geocoder entry box.
+            var zoomAutocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('zoom-to-area-text'));
+            //Bias the boundaries within the map for the zoom to area text.
+            zoomAutocomplete.bindTo('bounds', map);
+
             // These are the real estate listings that will be shown to the user.
             // Normally we'd have these in a database instead.
             var locations = [
@@ -534,7 +550,7 @@
         }
     </script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIPpv5ekuvZQheHxPkdhuWo79CKd6MJAU&libraries=geometry,drawing&v=3&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIPpv5ekuvZQheHxPkdhuWo79CKd6MJAU&libraries=places,geometry,drawing&v=3&callback=initMap">
     </script>
 </body>
 </html>
